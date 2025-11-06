@@ -1,26 +1,228 @@
+/* globals.css */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* ===========================================================
+        Business Software — Design Tokens (Dark app shell)
+        Source: your design PDF
+        =========================================================== */
+
+    /* Semantic Surfaces */
+    --bg-page: #0B0E12;          /* App background (2% noise assumed) */
+    --bg-surface: #12161C;       /* Default surface */
+    --bg-muted: #161B22;         /* Subtle/elev-1 surface */
+    --bg-header: #12161C;        /* Top bars / headers */
+
+    /* Elevated Surfaces (optional aliases) */
+    --surface-elev-1: #161B22;
+    --surface-elev-2: #1B2230;
+
+    /* Borders */
+    --border-subtle: #273244;    /* Hairline */
+    --border: #273244;           /* Standard */
+
+    /* Text */
+    --text-primary:  #E9EDF3;    /* Body */
+    --text-secondary:#A8B3C7;    /* Secondary / metadata */
+    --text-tertiary: #6E7B91;    /* Muted */
+
+    /* Brand / Accents */
+    --primary:       #2F6DF6;    /* Primary actions, focus */
+    --primary-600:   #275DCD;    /* Hover */
+    --primary-700:   #1D47A1;    /* Active */
+    --primary-050:   rgba(47,109,246,0.12); /* Soft tint for chips etc. */
+    --secondary:     #19B5A2;
+
+    /* Feedback */
+    --success: #20C997;
+    --warning: #F4C430;
+    --danger:  #FF6B6B;
+    --info:    #6EA8FE;
+
+    /* Sidebar (Dark) — mapped from surfaces */
+    --sidebar-bg: #1B2230;       /* Slightly higher elevation */
+    --sidebar-hover: #161B22;
+    --sidebar-active: #12161C;
+    --sidebar-text: #E9EDF3;
+    --sidebar-muted: #A8B3C7;
+
+    /* Focus */
+    --focus-ring: #2F6DF6;       /* 2px focus per spec */
+
+    /* Radii */
+    --radius-xs: 4px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-2xl: 28px;
+    /* Compatibility aliases (mirror Variedades names) */
+    --radius-pill: 9999px;
+
+    /* Shadows (Elevation) */
+    --shadow-elev-1: 0 1px 0 #0D1117, 0 0 0 1px #273244;
+    --shadow-elev-2: 0 6px 16px rgba(0,0,0,0.35);
+    --shadow-elev-3: 0 12px 28px rgba(0,0,0,0.45);
+
+    /* Typography scale (rem) — 8pt grid from the spec */
+    --fs-display-xl: 2.5rem;     /* 40px / 48 line */
+    --fs-display-l:  2rem;       /* 32px / 40 line */
+    --fs-h1:         1.75rem;    /* 28px / 36 line */
+    --fs-h2:         1.5rem;     /* 24px / 32 line */
+    --fs-h3:         1.25rem;    /* 20px / 28 line */
+    --fs-body:       1rem;       /* 16px / 24 line (Body-L) */
+    --fs-small:      0.875rem;   /* 14px / 22 line (Body-M) */
+    --fs-caption:    0.75rem;    /* 12px / 18 line */
+    --fs-micro:      0.6875rem;  /* 11px / 16 line */
+
+    --lh-tight: 1.25;
+    --lh-normal: 1.5;
+
+    /* Gradients (names & usage per spec) */
+    --grad-caribbean-dawn: linear-gradient(135deg,#0E1A2B 0%,#1D47A1 50%,#2F6DF6 100%);
+    --grad-malecon-mist:  linear-gradient(120deg,#0E1A2B 0%,rgba(46,142,255,0.20) 100%);
+    --grad-sosua-glass:   radial-gradient(circle at 30% 20%,rgba(255,255,255,0.08),rgba(255,255,255,0));
+    --grad-quisqueya-heatmap: linear-gradient(90deg,#0B0E12,#1B2230);
+
+    /* ===========================================================
+       Runtime alias variables (mirror @theme for components that
+       use var(--color-*) tokens directly in styles/classes)
+       =========================================================== */
+    /* Backgrounds */
+    --color-bg-app: var(--bg-page);
+    --color-bg-card: var(--bg-surface);
+    --color-bg-header: var(--bg-header);
+    --color-bg-muted: var(--bg-muted);
+
+    /* Sidebar */
+    --color-sidebar: var(--sidebar-bg);
+    --color-sidebar-hover: var(--sidebar-hover);
+    --color-sidebar-active: var(--sidebar-active);
+    --color-sidebar-text: var(--sidebar-text);
+    --color-sidebar-muted: var(--sidebar-muted);
+
+    /* Borders */
+    --color-border: var(--border);
+    --color-border-subtle: var(--border-subtle);
+
+    /* Text */
+    --color-text: var(--text-primary);
+    --color-text-muted: var(--text-secondary);
+    --color-text-soft: var(--text-tertiary);
+
+    /* Brand & Feedback */
+    --color-primary: var(--primary);
+    --color-primary-600: var(--primary-600);
+    --color-primary-050: var(--primary-050);
+    --color-secondary: var(--secondary);
+
+    --color-success: var(--success);
+    --color-warning: var(--warning);
+    --color-danger:  var(--danger);
+    --color-info:    var(--info);
+
+    /* Elevation (aliases for Tailwind exposure) */
+    --shadow-1: var(--shadow-elev-1);
+    --shadow-2: var(--shadow-elev-2);
+    --shadow-3: var(--shadow-elev-3);
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg-page);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-inter, Inter), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: var(--fs-body);
+    line-height: var(--lh-normal);
+    letter-spacing: 0.005em;
+  }
+
+  h1, h2, h3, h4 {
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  h1 { font-size: var(--fs-h1); line-height: 2.25rem; font-weight: 700; }  /* 28/36 */
+  h2 { font-size: var(--fs-h2); line-height: 2rem;   font-weight: 700; }  /* 24/32 */
+  h3 { font-size: var(--fs-h3); line-height: 1.75rem; font-weight: 600; } /* 20/28 */
+  h4 { font-size: var(--fs-body); line-height: 1.5rem;  font-weight: 600; } /* 16/24 */
+
+  a {
+    color: var(--primary);
+    text-underline-offset: 3px;
+  }
+  a:hover {
+    color: var(--primary-600);
+    text-decoration: underline;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+    border-radius: 6px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@theme {
+  /* ===========================================================
+     Tailwind-exposed custom properties (semantic tokens)
+     =========================================================== */
+
+  /* Backgrounds */
+  --color-bg-app: var(--bg-page);
+  --color-bg-card: var(--bg-surface);
+  --color-bg-header: var(--bg-header);
+  --color-bg-muted: var(--bg-muted);
+
+  /* Sidebar */
+  --color-sidebar: var(--sidebar-bg);
+  --color-sidebar-hover: var(--sidebar-hover);
+  --color-sidebar-active: var(--sidebar-active);
+  --color-sidebar-text: var(--sidebar-text);
+  --color-sidebar-muted: var(--sidebar-muted);
+
+  /* Borders */
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+
+  /* Text */
+  --color-text: var(--text-primary);
+  --color-text-muted: var(--text-secondary);
+  --color-text-soft: var(--text-tertiary);
+
+  /* Brand & Feedback */
+  --color-primary: var(--primary);
+  --color-primary-600: var(--primary-600);
+  --color-primary-050: var(--primary-050);
+  --color-secondary: var(--secondary);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger:  var(--danger);
+  --color-info:    var(--info);
+
+  /* Radii & Shadows */
+  --radius-xs: var(--radius-xs);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-2xl: var(--radius-2xl);
+  --radius-pill: var(--radius-pill);
+
+  --shadow-1: var(--shadow-1);
+  --shadow-2: var(--shadow-2);
+  --shadow-3: var(--shadow-3);
+
+  /* Gradients (optional exposure) */
+  --gradient-caribbean-dawn: var(--grad-caribbean-dawn);
+  --gradient-malecon-mist: var(--grad-malecon-mist);
+  --gradient-sosua-glass: var(--grad-sosua-glass);
+  --gradient-quisqueya-heatmap: var(--grad-quisqueya-heatmap);
 }
