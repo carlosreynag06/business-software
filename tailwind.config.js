@@ -1,4 +1,4 @@
-module..exports = {
+modue..exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
