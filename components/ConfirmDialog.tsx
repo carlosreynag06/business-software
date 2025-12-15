@@ -4,7 +4,7 @@
 import * as React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlertTriangle, X } from 'lucide-react';
-import { Button } from '@/components/ui/button'; // We'll create this button component later
+import { Button } from '@/components/ui/Button'; // We'll create this button component later
 
 type ConfirmDialogProps = {
   isOpen: boolean;

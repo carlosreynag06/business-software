@@ -8,30 +8,25 @@ import {
   BarChart3,
   BookUser,
   Briefcase,
+  Calendar,
   DollarSign,
   Filter,
   LayoutGrid,
-  Network,
-  WalletCards, // Corrected from 'Passport'
+  WalletCards,
   School,
   Sparkles,
-  TrendingUp,
 } from 'lucide-react';
 import type {
-  BusinessKpis,
-  PipelineStage,
   RevenueData,
   ChannelData,
   ModuleHealth,
   ActivityItem,
-} from '@/lib/types'; // We will define these types in lib/types.ts
+} from '@/lib/types';
 
 // --- Types ---
 type Period = 'mtd' | '30d' | 'quarter';
 
 interface DashboardClientProps {
-  initialKpis: BusinessKpis;
-  initialPipeline: PipelineStage[];
   initialRevenue: RevenueData[];
   initialChannels: ChannelData[];
   initialHealth: ModuleHealth;
@@ -51,8 +46,6 @@ const formatCurrencyRD = (value: number | undefined) => {
 
 // --- Main Client Component ---
 export default function DashboardClient({
-  initialKpis,
-  initialPipeline,
   initialRevenue,
   initialChannels,
   initialHealth,
@@ -60,14 +53,16 @@ export default function DashboardClient({
 }: DashboardClientProps) {
   const [period, setPeriod] = useState<Period>('mtd');
 
-  // In a real app, changing the period would re-fetch data.
-  // For this UI-only phase, we'll just show the initial mock data.
-  const kpis = initialKpis;
-  const pipeline = initialPipeline;
   const revenue = initialRevenue;
   const channels = initialChannels;
   const health = initialHealth;
   const activities = initialActivities;
+
+  // Compute total revenue from the revenue-by-service data
+  const totalRevenue = useMemo(
+    () => (Array.isArray(revenue) ? revenue.reduce((acc, s) => acc + s.revenue, 0) : 0),
+    [revenue]
+  );
 
   return (
     <div className="flex flex-col gap-6">
@@ -82,8 +77,8 @@ export default function DashboardClient({
           </p>
         </div>
         <div className="flex items-center gap-2">
-          {/* AI Insights Pill */}
-          <button className="flex h-10 items-center gap-2 rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-[var(--surface-elev-1)] px-4 text-sm font-medium text-[var(--text-primary)] shadow-[var(--shadow-1)] transition-colors hover:bg-[var(--surface-elev-2)]">
+          {/* AI Insights Pill - MODIFIED: Removed border */}
+          <button className="flex h-10 items-center gap-2 rounded-[var(--radius-md)] bg-[var(--surface-elev-1)] px-4 text-sm font-medium text-[var(--text-primary)] shadow-[var(--shadow-1)] transition-colors hover:bg-[var(--surface-elev-2)]">
             <Sparkles size={16} className="text-[var(--primary)]" />
             <span>AI Insights</span>
           </button>
@@ -92,36 +87,18 @@ export default function DashboardClient({
         </div>
       </div>
 
-      {/* Row 2: KPI Ring Group */}
+      {/* Row 2: KPI Ring Group (Revenue only) */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <KpiCard
           title="Revenue (RD$)"
-          value={formatCurrencyRD(kpis.revenue)}
+          value={formatCurrencyRD(totalRevenue)}
           icon={DollarSign}
           color="success"
         />
-        <KpiCard
-          title="New Leads"
-          value={kpis.leads.toString()}
-          icon={Network}
-          color="primary"
-        />
-        <KpiCard
-          title="Closes"
-          value={kpis.closes.toString()}
-          icon={TrendingUp}
-          color="secondary"
-        />
-        <KpiCard
-          title="Class Attendance"
-          value={`${kpis.attendance}%`}
-          icon={School}
-          color="info"
-        />
+        {/* Removed: New Leads / Closes / Class Attendance */}
       </div>
 
-      {/* Row 3: Pipeline Funnel */}
-      <PipelineFunnel stages={pipeline} />
+      {/* Row 3: Pipeline Funnel — REMOVED */}
 
       {/* Row 4: Revenue & Channel Performance */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -151,7 +128,7 @@ export default function DashboardClient({
         />
         <ModuleHealthCard
           title="Visa Caseload"
-          icon={WalletCards} // Corrected
+          icon={WalletCards}
           stats={[
             { label: 'Active Cases', value: health.visa.active },
             { label: 'At Risk', value: health.visa.atRisk },
@@ -168,8 +145,6 @@ export default function DashboardClient({
 
 // --- Sub-Components ---
 
----
-
 function PeriodToggle({
   selected,
   onSelect,
@@ -184,7 +159,8 @@ function PeriodToggle({
   ];
 
   return (
-    <div className="flex items-center rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-[var(--surface-elev-1)] p-1 shadow-[var(--shadow-1)]">
+    // MODIFIED: Removed border
+    <div className="flex items-center rounded-[var(--radius-md)] bg-[var(--surface-elev-1)] p-1 shadow-[var(--shadow-1)]">
       {periods.map((p) => (
         <button
           key={p.key}
@@ -202,8 +178,6 @@ function PeriodToggle({
     </div>
   );
 }
-
----
 
 function KpiCard({
   title,
@@ -225,11 +199,12 @@ function KpiCard({
     danger: 'text-[var(--danger)]',
   };
   return (
-    <div className="rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-[var(--surface-elev-1)] p-5 shadow-[var(--shadow-1)]">
+    // MODIFIED: Removed border
+    <div className="rounded-[var(--radius-md)] bg-[var(--surface-elev-1)] p-5 shadow-[var(--shadow-1)]">
       <div className="flex items-center gap-3">
         <div
           className={clsx(
-            'flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-sm)] bg-[var(--bg-surface)]',
+            'flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-sm)] bg-[var(--bg-surface)]', // bg-surface is lighter than bg-muted
             colorMap[color]
           )}
         >
@@ -248,55 +223,12 @@ function KpiCard({
   );
 }
 
----
-
-function PipelineFunnel({ stages }: { stages: PipelineStage[] }) {
-  const stageColors = [
-    'text-[#7B61FF]', // Lead
-    'text-[var(--secondary)]', // Discovery
-    'text-[var(--primary)]', // Delivery
-    'text-[var(--success)]', // Paid
-  ];
-
-  return (
-    <div className="rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-[var(--surface-elev-1)] p-5 shadow-[var(--shadow-1)]">
-      <h3 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
-        Pipeline Funnel
-      </h3>
-      <div className="grid grid-cols-4 gap-4">
-        {stages.map((stage, i) => (
-          <div key={stage.name} className="text-center">
-            <div
-              className={clsx(
-                'mb-1 font-sans text-xs font-bold uppercase tracking-wider',
-                stageColors[i % 4]
-              )}
-            >
-              {stage.name}
-            </div>
-            <div className="mb-2 font-sans text-3xl font-bold text-[var(--text-primary)]">
-              {stage.count}
-            </div>
-            {i < stages.length - 1 && (
-              <div className="text-sm font-medium text-[var(--text-secondary)]">
-                &rarr; {stage.conversionRate}%
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
----
-
 function RevenueByServiceChart({ data }: { data: RevenueData[] }) {
-  // This is a mock chart render
   const total = data.reduce((acc, s) => acc + s.revenue, 0);
 
   return (
-    <div className="rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-[var(--surface-elev-1)] p-5 shadow-[var(--shadow-1)]">
+    // MODIFIED: Removed border
+    <div className="rounded-[var(--radius-md)] bg-[var(--surface-elev-1)] p-5 shadow-[var(--shadow-1)]">
       <h3 className="mb-1 text-lg font-semibold text-[var(--text-primary)]">
         Revenue by Service
       </h3>
@@ -314,7 +246,7 @@ function RevenueByServiceChart({ data }: { data: RevenueData[] }) {
                 {formatCurrencyRD(service.revenue)}
               </span>
             </div>
-            <div className="h-2 w-full rounded-full bg-[var(--bg-surface)]">
+            <div className="h-2 w-full rounded-full bg-[var(--bg-muted)]"> {/* Use bg-muted for the track */}
               <div
                 className="h-2 rounded-full bg-[var(--primary)]"
                 style={{ width: `${(service.revenue / total) * 100}%` }}
@@ -327,19 +259,17 @@ function RevenueByServiceChart({ data }: { data: RevenueData[] }) {
   );
 }
 
----
-
 function ChannelPerformanceTable({ data }: { data: ChannelData[] }) {
   return (
-    <div className="rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-[var(--surface-elev-1)] shadow-[var(--shadow-1)]">
+    // MODIFIED: Removed border
+    <div className="rounded-[var(--radius-md)] bg-[var(--surface-elev-1)] shadow-[var(--shadow-1)]">
       <h3 className="border-b border-[var(--border-subtle)] p-5 text-lg font-semibold text-[var(--text-primary)]">
         Channel Performance
       </h3>
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-[var(--border-subtle)]">
-          <thead className="bg-[var(--bg-surface)]">
+          <thead className="bg-[var(--bg-muted)]">{/* HYDRATION FIX: Removed whitespace below this line */}
             <tr>
-              {/* Per the spec: Channel, Ad Spend, Leads, CPL, Closes, CAC, Revenue, ROI, ROAS */}
               <th className="px-4 py-3 text-left text-xs font-medium uppercase text-[var(--text-secondary)]">
                 Channel
               </th>
@@ -363,7 +293,7 @@ function ChannelPerformanceTable({ data }: { data: ChannelData[] }) {
                 <td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-[var(--text-primary)]">
                   {channel.name}
                 </td>
-                <td className="whitespace-nowCrap px-4 py-3 text-sm text-[var(--text-secondary)]">
+                <td className="whitespace-nowrap px-4 py-3 text-sm text-[var(--text-secondary)]">
                   {formatCurrencyRD(channel.spend)}
                 </td>
                 <td className="whitespace-nowrap px-4 py-3 text-sm text-[var(--text-secondary)]">
@@ -384,8 +314,6 @@ function ChannelPerformanceTable({ data }: { data: ChannelData[] }) {
   );
 }
 
----
-
 function ModuleHealthCard({
   title,
   icon: Icon,
@@ -403,7 +331,8 @@ function ModuleHealthCard({
     warning: 'text-[var(--warning)]',
   };
   return (
-    <div className="rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-[var(--surface-elev-1)] p-5 shadow-[var(--shadow-1)]">
+    // MODIFIED: Removed border
+    <div className="rounded-[var(--radius-md)] bg-[var(--surface-elev-1)] p-5 shadow-[var(--shadow-1)]">
       <div className="mb-4 flex items-center gap-3">
         <Icon size={18} className={clsx('shrink-0', colorMap[color])} />
         <h3 className="text-lg font-semibold text-[var(--text-primary)]">
@@ -426,19 +355,18 @@ function ModuleHealthCard({
   );
 }
 
----
-
 function UpcomingActivitiesFeed({ activities }: { activities: ActivityItem[] }) {
   const iconMap: Record<string, React.ElementType> = {
     call: BookUser,
-    whatsapp: LayoutGrid, // Using a different icon for variety
+    whatsapp: LayoutGrid,
     email: Briefcase,
     meeting: Calendar,
     note: Activity,
   };
 
   return (
-    <div className="rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-[var(--surface-elev-1)] p-5 shadow-[var(--shadow-1)]">
+    // MODIFIED: Removed border
+    <div className="rounded-[var(--radius-md)] bg-[var(--surface-elev-1)] p-5 shadow-[var(--shadow-1)]">
       <h3 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
         Upcoming Activities
       </h3>
@@ -452,7 +380,7 @@ function UpcomingActivitiesFeed({ activities }: { activities: ActivityItem[] }) 
           const Icon = iconMap[item.type] || Activity;
           return (
             <div key={item.id} className="flex items-start gap-3">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-sm)] bg-[var(--bg-surface)] text-[var(--text-secondary)]">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-sm)] bg-[var(--bg-muted)] text-[var(--text-secondary)]"> {/* Use bg-muted */}
                 <Icon size={18} />
               </div>
               <div>

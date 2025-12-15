@@ -1,12 +1,12 @@
-// components/Topbar.tsx
 'use client';
 
 import React from 'react';
-import { Search, Plus, Sparkles, User, Menu } from 'lucide-react';
+import Link from 'next/link';
+import { Menu, CalendarDays } from 'lucide-react';
 import { useAppState } from '@/app/state-provider';
 import { Button } from '@/components/ui/Button';
 
-// ---  Main Topbar Component ---
+// --- Main Topbar Component ---
 export function Topbar() {
   const { dispatch } = useAppState();
 
@@ -25,45 +25,28 @@ export function Topbar() {
         </Button>
       </div>
 
-      {/* 2. Right Side: Actions (per design doc) */}
+      {/* 2. Right Side: Actions */}
       <div className="flex items-center gap-3">
-        {/* Global Search */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+        {/* Agenda Button */}
+        <Link
+          href="/agenda"
+          className="group flex items-center gap-2 rounded-[var(--radius-md)] bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-white transition-all hover:bg-[var(--color-primary-600)] hover:text-white no-underline hover:no-underline"
         >
-          <span className="sr-only">Search</span>
-          <Search size={20} strokeWidth={1.5} />
-        </Button>
+          <CalendarDays
+            size={18}
+            strokeWidth={1.5}
+            className="text-white transition-colors group-hover:text-white"
+          />
+          <span>Agenda</span>
+        </Link>
 
-        {/* Quick Add */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+        {/* Notes Button */}
+        <Link
+          href="/notes"
+          className="flex items-center gap-2 rounded-[var(--radius-md)] bg-[var(--color-warning)] px-4 py-2 text-sm font-medium text-white transition-all hover:brightness-95 no-underline hover:no-underline"
         >
-          <span className="sr-only">Quick Add</span>
-          <Plus size={20} strokeWidth={2} />
-        </Button>
-
-        {/* AI Button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-        >
-          <span className="sr-only">AI Assistant</span>
-          <Sparkles size={20} strokeWidth={1.5} />
-        </Button>
-
-        {/* Owner Menu */}
-        <button
-          className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--primary-050)] text-[var(--primary)]"
-          aria-label="Owner menu and settings"
-        >
-          <User size={18} strokeWidth={2} />
-        </button>
+          <span>Notes</span>
+        </Link>
       </div>
     </header>
   );

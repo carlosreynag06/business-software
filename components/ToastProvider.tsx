@@ -16,11 +16,11 @@ import { createPortal } from 'react-dom';
 /*
 =======================================================================================
  Toasts per My Business Software Design
- Position: top-right [cite: 5953]
- Variants: success, info, warning, danger [cite: 5819, 5820, 5821]
- Duration: 4.5s default [cite: 5953]
+ Position: top-right
+ Variants: success, info, warning, danger
+ Duration: 4.5s default
  Pause on hover; resume on mouse leave
- Radius: md; Shadow: elev-3; [cite: 5886, 5889]
+ Radius: md; Shadow: elev-3;
  Accessible: role="status", aria-live="polite"
 ======================================================================================
 */
@@ -33,7 +33,7 @@ export type ToastOptions = {
   description?: string;
   variant?: ToastVariant;
   duration?: number; // ms
-  action?: { label: string; onClick: () => void }; [cite: 5953]
+  action?: { label: string; onClick: () => void };
 };
 
 type ToastInternal = Required<ToastOptions> & {
@@ -49,7 +49,7 @@ type ToastContextValue = {
   clear: () => void;
 };
 
-const DEFAULT_DURATION = 4500; // 4.5 seconds [cite: 5953]
+const DEFAULT_DURATION = 4500; // 4.5 seconds
 const ToastContext = createContext<ToastContextValue | null>(null);
 
 // Lightweight pub-sub so you can call toast() outside React trees if needed.
@@ -69,7 +69,7 @@ export function useToast() {
 }
 
 function variantStyles(variant: ToastVariant) {
-  // Uses CSS variables defined in globals.css [cite: 5819, 5820, 5821]
+  // Uses CSS variables defined in globals.css
   const map = {
     success: {
       tint: 'var(--color-success)',

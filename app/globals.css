@@ -1,54 +1,52 @@
-/* globals.css */
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @layer base {
   :root {
     /* ===========================================================
-        Business Software — Design Tokens (Dark app shell)
-        Source: your design PDF
-        =========================================================== */
+       Business Software — NEW "Cool & Clean" Palette
+       =========================================================== */
 
-    /* Semantic Surfaces */
-    --bg-page: #0B0E12;          /* App background (2% noise assumed) */
-    --bg-surface: #12161C;       /* Default surface */
-    --bg-muted: #161B22;         /* Subtle/elev-1 surface */
-    --bg-header: #12161C;        /* Top bars / headers */
+    /* --- MODIFIED: "monday.com" 3-Level Surface Hierarchy --- */
+    --bg-shell: #F0F3F8; /* Light blue-gray (shell) */
+    --bg-page: #F5F6F8; /* Light neutral gray for page canvas */
+    --bg-surface: #FFFFFF; /* Crisp White Cards */
+    --bg-muted: #F5F6F8; /* Muted bg (matches page) */
+    --bg-header: var(--bg-surface); /* White header (uses surface) */
 
-    /* Elevated Surfaces (optional aliases) */
-    --surface-elev-1: #161B22;
-    --surface-elev-2: #1B2230;
+    /* Elevated Surfaces */
+    --surface-elev-1: #FFFFFF;
+    --surface-elev-2: #FDFDFD; /* Slightly off-white */
 
-    /* Borders */
-    --border-subtle: #273244;    /* Hairline */
-    --border: #273244;           /* Standard */
+    /* --- MODIFIED: Cool, Neutral Borders --- */
+    --border-subtle: #EBEBEB; /* Lighter neutral gray */
+    --border: #DCDFE4; /* Light neutral gray */
 
-    /* Text */
-    --text-primary:  #E9EDF3;    /* Body */
-    --text-secondary:#A8B3C7;    /* Secondary / metadata */
-    --text-tertiary: #6E7B91;    /* Muted */
+    /* --- MODIFIED: Cool, Neutral Text --- */
+    --text-primary: #1F2937; /* Neutral dark gray (was #332D29) */
+    --text-secondary: #6B7280; /* Neutral mid-gray (was #7A7572) */
+    --text-tertiary: #9CA3AF; /* Neutral light-gray (was #9B9591) */
 
-    /* Brand / Accents */
-    --primary:       #2F6DF6;    /* Primary actions, focus */
-    --primary-600:   #275DCD;    /* Hover */
-    --primary-700:   #1D47A1;    /* Active */
-    --primary-050:   rgba(47,109,246,0.12); /* Soft tint for chips etc. */
-    --secondary:     #19B5A2;
+    /* Brand / Accents (Kept) */
+    --primary: #2F6DF6;
+    --primary-600: #275DCD;
+    --primary-700: #1D47A1;
+    --primary-050: rgba(47, 109, 246, 0.1);
 
-    /* Feedback */
+    /* Feedback (Kept) */
     --success: #20C997;
     --warning: #F4C430;
-    --danger:  #FF6B6B;
-    --info:    #6EA8FE;
+    --danger: #FF6B6B;
+    --info: #6EA8FE;
 
-    /* Sidebar (Dark) — mapped from surfaces */
-    --sidebar-bg: #1B2230;       /* Slightly higher elevation */
-    --sidebar-hover: #161B22;
-    --sidebar-active: #12161C;
-    --sidebar-text: #E9EDF3;
-    --sidebar-muted: #A8B3C7;
+    /* --- MODIFIED: Sidebar (Light Cool Gray) --- */
+    --sidebar-bg: #FFFFFF;        /* Cool gray background (Slate 50) */
+    --sidebar-hover: #E2E8F0;     /* Slightly darker for hover (Slate 200) */
+    --sidebar-active: var(--primary-050); /* Active state bg */
+    --sidebar-text: #1F2937;      /* Dark text for light bg (Gray 800) */
+    --sidebar-muted: #6B7280;     /* Muted text (Gray 500) */
 
     /* Focus */
-    --focus-ring: #2F6DF6;       /* 2px focus per spec */
+    --focus-ring: #2F6DF6;
 
     /* Radii */
     --radius-xs: 4px;
@@ -57,37 +55,47 @@
     --radius-lg: 16px;
     --radius-xl: 20px;
     --radius-2xl: 28px;
-    /* Compatibility aliases (mirror Variedades names) */
     --radius-pill: 9999px;
 
-    /* Shadows (Elevation) */
-    --shadow-elev-1: 0 1px 0 #0D1117, 0 0 0 1px #273244;
-    --shadow-elev-2: 0 6px 16px rgba(0,0,0,0.35);
-    --shadow-elev-3: 0 12px 28px rgba(0,0,0,0.45);
+    /* Shadows (Clean) */
+    --shadow-elev-1: 0 1px 2px rgba(0, 0, 0, 0.05); /* Softer shadow */
+    --shadow-elev-2: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-elev-3: 0 10px 30px rgba(0, 0, 0, 0.1);
 
-    /* Typography scale (rem) — 8pt grid from the spec */
-    --fs-display-xl: 2.5rem;     /* 40px / 48 line */
-    --fs-display-l:  2rem;       /* 32px / 40 line */
-    --fs-h1:         1.75rem;    /* 28px / 36 line */
-    --fs-h2:         1.5rem;     /* 24px / 32 line */
-    --fs-h3:         1.25rem;    /* 20px / 28 line */
-    --fs-body:       1rem;       /* 16px / 24 line (Body-L) */
-    --fs-small:      0.875rem;   /* 14px / 22 line (Body-M) */
-    --fs-caption:    0.75rem;    /* 12px / 18 line */
-    --fs-micro:      0.6875rem;  /* 11px / 16 line */
+    /* Typography scale (Kept) */
+    --fs-display-xl: 2.5rem; /* 40px / 48 line */
+    --fs-display-l: 2rem; /* 32px / 40 line */
+    --fs-h1: 1.75rem; /* 28px / 36 line */
+    --fs-h2: 1.5rem; /* 24px / 32 line */
+    --fs-h3: 1.25rem; /* 20px / 28 line */
+    --fs-body: 1rem; /* 16px / 24 line (Body-L) */
+    --fs-small: 0.875rem; /* 14px / 22 line (Body-M) */
+    --fs-caption: 0.75rem; /* 12px / 18 line */
+    --fs-micro: 0.6875rem; /* 11px / 16 line */
 
     --lh-tight: 1.25;
     --lh-normal: 1.5;
 
-    /* Gradients (names & usage per spec) */
-    --grad-caribbean-dawn: linear-gradient(135deg,#0E1A2B 0%,#1D47A1 50%,#2F6DF6 100%);
-    --grad-malecon-mist:  linear-gradient(120deg,#0E1A2B 0%,rgba(46,142,255,0.20) 100%);
-    --grad-sosua-glass:   radial-gradient(circle at 30% 20%,rgba(255,255,255,0.08),rgba(255,255,255,0));
-    --grad-quisqueya-heatmap: linear-gradient(90deg,#0B0E12,#1B2230);
+    /* Gradients (Updated) */
+    --grad-caribbean-dawn: linear-gradient(135deg, #F5F6F8 0%, #E3EFFF 50%, #D8E4FF 100%);
+    --grad-malecon-mist: linear-gradient(
+      120deg,
+      #ffffff 0%,
+      rgba(47, 109, 246, 0.05) 100%
+    );
+    --grad-sosua-glass: radial-gradient(
+      circle at 30% 20%,
+      rgba(31, 41, 55, 0.03),
+      rgba(31, 41, 55, 0)
+    );
+    --grad-quisqueya-heatmap: linear-gradient(
+      90deg,
+      #F8F9FA,
+      #F5F6F8
+    );
 
     /* ===========================================================
-       Runtime alias variables (mirror @theme for components that
-       use var(--color-*) tokens directly in styles/classes)
+       Runtime alias variables (for components using var(--color-*)
        =========================================================== */
     /* Backgrounds */
     --color-bg-app: var(--bg-page);
@@ -119,8 +127,8 @@
 
     --color-success: var(--success);
     --color-warning: var(--warning);
-    --color-danger:  var(--danger);
-    --color-info:    var(--info);
+    --color-danger: var(--danger);
+    --color-info: var(--info);
 
     /* Elevation (aliases for Tailwind exposure) */
     --shadow-1: var(--shadow-elev-1);
@@ -128,7 +136,8 @@
     --shadow-3: var(--shadow-elev-3);
   }
 
-  html, body {
+  html,
+  body {
     height: 100%;
     background: var(--bg-page);
     color: var(--text-primary);
@@ -137,21 +146,42 @@
   }
 
   body {
-    font-family: var(--font-inter, Inter), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    font-family: var(--font-inter, Inter), ui-sans-serif, system-ui,
+      -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji',
+      'Segoe UI Emoji';
     font-size: var(--fs-body);
     line-height: var(--lh-normal);
     letter-spacing: 0.005em;
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     color: var(--text-primary);
     letter-spacing: -0.01em;
   }
 
-  h1 { font-size: var(--fs-h1); line-height: 2.25rem; font-weight: 700; }  /* 28/36 */
-  h2 { font-size: var(--fs-h2); line-height: 2rem;   font-weight: 700; }  /* 24/32 */
-  h3 { font-size: var(--fs-h3); line-height: 1.75rem; font-weight: 600; } /* 20/28 */
-  h4 { font-size: var(--fs-body); line-height: 1.5rem;  font-weight: 600; } /* 16/24 */
+  h1 {
+    font-size: var(--fs-h1);
+    line-height: 2.25rem;
+    font-weight: 700;
+  } /* 28/36 */
+  h2 {
+    font-size: var(--fs-h2);
+    line-height: 2rem;
+    font-weight: 700;
+  } /* 24/32 */
+  h3 {
+    font-size: var(--fs-h3);
+    line-height: 1.75rem;
+    font-weight: 600;
+  } /* 20/28 */
+  h4 {
+    font-size: var(--fs-body);
+    line-height: 1.5rem;
+    font-weight: 600;
+  } /* 16/24 */
 
   a {
     color: var(--primary);
@@ -169,11 +199,10 @@
   }
 }
 
+/* Tailwind v4 Tokens: map theme tokens to concrete values.
+   IMPORTANT: avoid self-referencing (e.g., --shadow-1: var(--shadow-1)).
+   Bind theme tokens to the base :root values defined above. */
 @theme {
-  /* ===========================================================
-     Tailwind-exposed custom properties (semantic tokens)
-     =========================================================== */
-
   /* Backgrounds */
   --color-bg-app: var(--bg-page);
   --color-bg-card: var(--bg-surface);
@@ -204,10 +233,10 @@
 
   --color-success: var(--success);
   --color-warning: var(--warning);
-  --color-danger:  var(--danger);
-  --color-info:    var(--info);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
 
-  /* Radii & Shadows */
+  /* Radii & Shadows (bind to base vars; no self-reference) */
   --radius-xs: var(--radius-xs);
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
@@ -216,11 +245,11 @@
   --radius-2xl: var(--radius-2xl);
   --radius-pill: var(--radius-pill);
 
-  --shadow-1: var(--shadow-1);
-  --shadow-2: var(--shadow-2);
-  --shadow-3: var(--shadow-3);
+  --shadow-1: var(--shadow-elev-1);
+  --shadow-2: var(--shadow-elev-2);
+  --shadow-3: var(--shadow-elev-3);
 
-  /* Gradients (optional exposure) */
+  /* Gradients */
   --gradient-caribbean-dawn: var(--grad-caribbean-dawn);
   --gradient-malecon-mist: var(--grad-malecon-mist);
   --gradient-sosua-glass: var(--grad-sosua-glass);

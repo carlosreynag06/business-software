@@ -2,39 +2,11 @@
 'use server';
 
 import {
-  BusinessKpis,
-  PipelineStage,
   RevenueData,
   ChannelData,
   ModuleHealth,
   ActivityItem,
-} from '@/lib/types'; // We will create these types in lib/types.ts
-
-/**
- * MOCK: Fetches the main KPI data for the dashboard.
- */
-export async function getBusinessKpiData(): Promise<BusinessKpis | null> {
-  // Mock data based on design spec
-  return {
-    revenue: 245300.0,
-    leads: 38,
-    closes: 12,
-    attendance: 92, // as a percentage
-  };
-}
-
-/**
- * MOCK: Fetches data for the pipeline funnel.
- */
-export async function getPipelineFunnelData(): Promise<PipelineStage[] | null> {
-  // Mock data based on design spec
-  return [
-    { name: 'Lead', count: 120, conversionRate: 31.6 },
-    { name: 'Discovery', count: 38, conversionRate: 68.4 },
-    { name: 'Delivery', count: 26, conversionRate: 46.1 },
-    { name: 'Paid', count: 12, conversionRate: 0 },
-  ];
-}
+} from '@/lib/types';
 
 /**
  * MOCK: Fetches revenue broken down by service.

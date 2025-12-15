@@ -1,4 +1,3 @@
-// app/state-provider.tsx
 'use client';
 
 import React, {
@@ -11,18 +10,28 @@ import React, {
 
 // --- App State ---
 type AppState = {
+  // Business / Shared
   isSidebarOpen: boolean;
-  // We can add more global state here later
+  isAIAssistantOpen: boolean;
+  searchQuery: string;
+  
+  // Personal: Budget only (Shopping/Checklist removed)
+  isAddExpenseModalOpen: boolean;
 };
 
 // --- Actions ---
-type Action = { type: 'TOGGLE_SIDEBAR' };
+type Action =
+  | { type: 'TOGGLE_SIDEBAR' }
+  | { type: 'TOGGLE_AI_ASSISTANT' }
+  | { type: 'SET_SEARCH_QUERY'; payload: string }
+  | { type: 'SET_EXPENSE_MODAL'; payload: boolean };
 
 // --- Initial State ---
 const initialState: AppState = {
-  // Per the design doc, the sidebar is visible on desktop by default
-  // but collapsed on tablet. We'll default to 'true' for desktop-first.
-  isSidebarOpen: true,
+  isSidebarOpen: true, // Desktop default
+  isAIAssistantOpen: false,
+  searchQuery: '',
+  isAddExpenseModalOpen: false,
 };
 
 // --- Reducer ---
@@ -30,6 +39,12 @@ const appReducer = (state: AppState, action: Action): AppState => {
   switch (action.type) {
     case 'TOGGLE_SIDEBAR':
       return { ...state, isSidebarOpen: !state.isSidebarOpen };
+    case 'TOGGLE_AI_ASSISTANT':
+      return { ...state, isAIAssistantOpen: !state.isAIAssistantOpen };
+    case 'SET_SEARCH_QUERY':
+      return { ...state, searchQuery: action.payload };
+    case 'SET_EXPENSE_MODAL':
+      return { ...state, isAddExpenseModalOpen: action.payload };
     default:
       return state;
   }
